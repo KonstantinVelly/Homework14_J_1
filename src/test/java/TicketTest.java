@@ -16,7 +16,7 @@ public class TicketTest {
 
 
     @Test //Ищем нужные элементы в списке и сортируем по возрастанию цены
-    public void findItemByDestination() {
+    public void foundSeveralItems() {
         repo.save(ticket1);
         repo.save(ticket2);
         repo.save(ticket3);
@@ -25,6 +25,32 @@ public class TicketTest {
 
         Ticket[] expected = {ticket3, ticket5, ticket2};
         Ticket[] actual = manager.searchBy("PUL", "HEL");
+
+        assertArrayEquals(expected, actual);
+    }
+    @Test //Ищем нужные элементы в списке и сортируем по возрастанию цены
+    public void foundOnlyOneItem() {
+        repo.save(ticket1);
+        repo.save(ticket2);
+        repo.save(ticket3);
+        repo.save(ticket4);
+        repo.save(ticket5);
+
+        Ticket[] expected = {ticket4};
+        Ticket[] actual = manager.searchBy("LON", "ATH");
+
+        assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void noItemsFound() {
+        repo.save(ticket1);
+        repo.save(ticket2);
+        repo.save(ticket3);
+        repo.save(ticket4);
+        repo.save(ticket5);
+
+        Ticket[] expected = {};
+        Ticket[] actual = manager.searchBy("HER", "PAR");
 
         assertArrayEquals(expected, actual);
     }
